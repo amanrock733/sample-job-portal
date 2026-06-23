@@ -1,0 +1,59 @@
+// Prisma schema for Job Portal
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  password     String
+  role         String   @default("CANDIDATE") // CANDIDATE | ADMIN
+  phone        String?
+  skills       String?  // comma-separated
+  resumeUrl    String?
+  profileImage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  jobs         Job[]         @relation("JobAuthor")
+  applications Application[]
+}
+
+model Job {
+  id           String   @id @default(cuid())
+  title        String
+  company      String
+  location     String
+  salary       String
+  experience   String   // e.g. "0-2", "2-4", "4-6", "6+"
+  jobType      String   // Full-time | Part-time | Contract | Internship | Remote
+  description  String
+  requirements String   // comma or newline separated
+  status       String   @default("OPEN") // OPEN | CLOSED
+  createdBy    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  author       User         @relation("JobAuthor", fields: [createdBy], references: [id], onDelete: Cascade)
+  applications Application[]
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  userId    String
+  jobId     String
+  status    String   @default("PENDING") // PENDING | REVIEWED | ACCEPTED | REJECTED
+  appliedAt DateTime @default(now())
+
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job       Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, jobId])
+}
