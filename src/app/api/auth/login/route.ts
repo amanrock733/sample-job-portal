@@ -9,7 +9,24 @@ interface LoginBody {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as LoginBody;
+    const text = await req.text();
+    let body: LoginBody | null = null;
+
+    if (text?.trim()) {
+      try {
+        body = JSON.parse(text) as LoginBody;
+      } catch {
+        body = null;
+      }
+    }
+
+    if (!body) {
+      return NextResponse.json(
+        { error: "Invalid JSON payload" },
+        { status: 400 }
+      );
+    }
+
     const email = body.email?.trim().toLowerCase();
     const password = body.password;
 

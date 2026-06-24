@@ -11,7 +11,24 @@ interface RegisterBody {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as RegisterBody;
+    const text = await req.text();
+    let body: RegisterBody | null = null;
+
+    if (text?.trim()) {
+      try {
+        body = JSON.parse(text) as RegisterBody;
+      } catch {
+        body = null;
+      }
+    }
+
+    if (!body) {
+      return NextResponse.json(
+        { error: "Invalid JSON payload" },
+        { status: 400 }
+      );
+    }
+
     const name = body.name?.trim();
     const email = body.email?.trim().toLowerCase();
     const password = body.password;
