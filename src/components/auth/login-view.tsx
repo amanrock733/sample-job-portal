@@ -152,6 +152,29 @@ export function LoginView() {
               {isSubmitting ? "Logging in…" : "Log in"}
               {!isSubmitting && <ArrowRight className="ml-1.5 h-4 w-4" />}
             </Button>
+
+            {process.env.NEXT_PUBLIC_ENABLE_DEMO_LOGIN === "true" && (
+              <div className="flex gap-2 pt-2">
+                <Button 
+                  type="button" 
+                  variant="secondary" 
+                  className="flex-1 text-xs" 
+                  onClick={() => onSubmit({ email: "admin@jobportal.com", password: "admin1234" })}
+                  disabled={isSubmitting}
+                >
+                  Demo Admin
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="secondary" 
+                  className="flex-1 text-xs" 
+                  onClick={() => onSubmit({ email: "aarav@example.com", password: "password1234" })}
+                  disabled={isSubmitting}
+                >
+                  Demo Candidate
+                </Button>
+              </div>
+            )}
           </form>
 
           <div className="mt-6 rounded-lg border border-border bg-muted/30 p-3 text-xs">

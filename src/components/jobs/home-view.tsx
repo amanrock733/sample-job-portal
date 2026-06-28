@@ -98,41 +98,7 @@ export function HomeView() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <Card className="relative overflow-hidden bg-gradient-to-br from-primary to-primary/80 p-8 text-primary-foreground sm:p-12">
-          <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
-          <div className="relative flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="max-w-xl">
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                Hiring for your team?
-              </h2>
-              <p className="mt-2 text-sm text-primary-foreground/80">
-                Post jobs, manage applications, and find your next great hire —
-                all from one admin dashboard.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Button
-                variant="secondary"
-                size="lg"
-                onClick={() => setView("admin-dashboard")}
-              >
-                <Shield className="mr-1.5 h-4 w-4" />
-                Admin dashboard
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-                onClick={() => setView("login")}
-              >
-                Log in
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </section>
+
     </div>
   );
 }
